@@ -7,6 +7,7 @@ from django.conf import settings
 
 from xlrd import open_workbook,cellname
 from xlutils.copy import copy
+import xlrd
 
 
 from .forms import *
@@ -33,6 +34,8 @@ def index(request):
 
     return render(request, "index.html", context)
 
+
+
 def view(request, id=0):
     file = FileUpload.objects.get(pk=id)
 
@@ -44,26 +47,7 @@ def view(request, id=0):
 
     for row_index in range(8, sheet.nrows):
         excel_date = sheet.cell(row_index,2).value
-        string_date = str(excel_date)
-        if len(string_date) == 10:
-
-            clean_string = string_date.strip()
-            clean_string = clean_string.replace(".", "/")
-            x = clean_string.split("/")
-            s.write(row_index, 2, clean_string)
-
-            if int(x[1]) > 12:
-                temp_day = x[1]
-                x[1] = x[0]
-                x[0] = temp_day
-
-            for i in x:
-            
-
-                print(i)
-        else:
-            print("F")
-    
+        s.write(row_index, 2, "clean_date_string")
 
     new_file_name = 'media/static/output/' + str(id) + '.xls'
     wb.save(new_file_name)
