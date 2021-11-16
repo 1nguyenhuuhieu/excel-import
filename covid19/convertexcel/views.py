@@ -46,8 +46,39 @@ def view(request, id=0):
     sheet = book.sheet_by_index(0)
 
     for row_index in range(8, sheet.nrows):
-        excel_date = sheet.cell(row_index,2).value
-        s.write(row_index, 2, "clean_date_string")
+        excel_name = sheet.cell(row_index,1).value
+        excel_birthdate = str(sheet.cell(row_index,2).value)
+        clean_birthdate = excel_birthdate.strip()
+        clean_birthdate = clean_birthdate.replace(".", "/")
+        split_birthdate = clean_birthdate.split("/")
+
+        if len(split_birthdate) == 3:
+
+            
+
+
+            #thêm kí tự cho đủ ngày tháng
+            split_birthdate[0] = "0" + split_birthdate[0]
+            split_birthdate[1] = "0" + split_birthdate[1]
+            split_birthdate[2] = "1" + split_birthdate[2]
+            split_birthdate[0] = split_birthdate[0][-2:]
+            split_birthdate[1] = split_birthdate[1][-2:]
+            split_birthdate[2] = split_birthdate[2][-4:]
+
+            # đổi vị trí nếu chuỗi giữa lớn hơn 12
+
+            if int(split_birthdate[1]) > 12:
+                temp = split_birthdate[1]
+                split_birthdate[1] = split_birthdate[0]
+                split_birthdate[0] = temp
+            text_birthdate = "/".join(split_birthdate)
+        elif len(split_birthdate) == 2:
+            python_date = datetime(*xlrd.xldate_as_tuple(int(split_birthdate[0]), 0))
+            text_birthdate = str(python_date.strftime("%d")) +"/" + str(python_date.month) + "/" + str(python_date.year)
+
+        clean_name = excel_name.title()
+        s.write(row_index, 2, text_birthdate)
+        s.write(row_index, 1, clean_name)
 
     new_file_name = 'media/static/output/' + str(id) + '.xls'
     wb.save(new_file_name)
