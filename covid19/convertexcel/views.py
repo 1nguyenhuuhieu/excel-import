@@ -58,6 +58,9 @@ def view(request, id=0):
     count_p = len(range(8,sheet.nrows))
 
     temp_group = 8
+    temp_tinh = 0
+    temp_huyen = 0
+    temp_xa = 0
 
     for row_index in range(8, sheet.nrows):
         excel_name = sheet.cell(row_index,1).value
@@ -97,7 +100,11 @@ def view(request, id=0):
             python_date = datetime(*xlrd.xldate_as_tuple(int(split_birthdate[0]), 0))
             text_birthdate = python_date.strftime("%d/%m/%Y")
         else:
-            text_birthdate = "01/01/1990"
+            year = int(split_birthdate[0])
+            if year in range(1920,2010):
+                text_birthdate = "01/01/" + str(year)
+            else:
+                text_birthdate = "01/01/1990"
 
         # chuyển đổi giới tính
         male_list = ['0', 'nam']
