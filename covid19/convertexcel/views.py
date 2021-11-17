@@ -71,7 +71,12 @@ def view(request, id=0):
             excel_phone = int(sheet.cell(row_index, 6).value)
         except:
             excel_phone = str(sheet.cell(row_index, 6).value)
-        excel_ccnd = sheet.cell(row_index, 7).value
+        try:
+            excel_ccnd = int(sheet.cell(row_index, 7).value)
+            excel_ccnd = str(excel_ccnd)
+        except:
+            excel_ccnd = str(sheet.cell(row_index, 7).value)
+
         excel_MBH = str(sheet.cell(row_index, 8).value)
         excel_tinh = sheet.cell(row_index, 10).value
         excel_huyen = sheet.cell(row_index, 12).value
