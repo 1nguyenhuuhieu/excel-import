@@ -171,11 +171,13 @@ def view(request, id=0):
             temp_tinh = text_tinh
         else:
             text_tinh = temp_tinh
+
         if excel_huyen:
             text_huyen = int(excel_huyen)
             temp_huyen = text_huyen
         else:
             text_huyen = temp_huyen
+            
         if excel_xa:
             text_xa = int(excel_xa)
             temp_xa = text_xa
