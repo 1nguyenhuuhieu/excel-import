@@ -145,6 +145,8 @@ def view(request, id=0):
                 clean_phone = clean_phone.replace(".", "")
                 clean_phone = clean_phone.replace(",", "")
                 clean_phone = clean_phone.replace(" ", "")
+                clean_phone = clean_phone.replace("o", "0")
+                clean_phone = clean_phone.replace("O", "0")
             else:
                 clean_phone = str(excel_phone)
             string_phone = "0000" + clean_phone
