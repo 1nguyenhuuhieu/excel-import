@@ -68,7 +68,7 @@ def view(request, id=0):
         excel_sex = str(sheet.cell(row_index,3).value).lower()
         excel_group = sheet.cell(row_index,4).value
         excel_phone = str(sheet.cell(row_index, 6).value)
-        excel_ccnd = str(sheet.cell(row_index, 7).value)
+        excel_ccnd = sheet.cell(row_index, 7).value
         excel_MBH = str(sheet.cell(row_index, 8).value)
         excel_tinh = sheet.cell(row_index, 10).value
         excel_huyen = sheet.cell(row_index, 12).value
@@ -148,10 +148,10 @@ def view(request, id=0):
 
         # chuyển đổi số cccd
         if excel_ccnd:
-            if len(excel_ccnd) == 8 or len(excel_ccnd) == 9 or len(excel_ccnd) == 12:
+            if len(str(excel_ccnd)) == 8 or len(str(excel_ccnd)) == 9 or len(str(excel_ccnd)) == 12:
                 text_ccnd = int(excel_ccnd)
             else:
-                text_ccnd = "000000000" + excel_ccnd
+                text_ccnd = "000000000" + str(excel_ccnd)
                 text_ccnd = text_ccnd[-12:]
         else:
             text_ccnd = "188888888"
