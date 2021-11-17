@@ -149,7 +149,7 @@ def view(request, id=0):
         # chuyển đổi số cccd
         if excel_ccnd:
             if len(excel_ccnd) == 8 or len(excel_ccnd) == 9 or len(excel_ccnd) == 12:
-                text_ccnd = excel_ccnd
+                text_ccnd = int(excel_ccnd)
             else:
                 text_ccnd = "000000000" + excel_ccnd
                 text_ccnd = text_ccnd[-12:]
