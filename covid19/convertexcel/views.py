@@ -67,7 +67,10 @@ def view(request, id=0):
         excel_birthdate = str(sheet.cell(row_index,2).value)
         excel_sex = str(sheet.cell(row_index,3).value).lower()
         excel_group = sheet.cell(row_index,4).value
-        excel_phone = str(sheet.cell(row_index, 6).value)
+        try:
+            excel_phone = int(sheet.cell(row_index, 6).value)
+        except:
+            excel_phone = str(sheet.cell(row_index, 6).value)
         excel_ccnd = sheet.cell(row_index, 7).value
         excel_MBH = str(sheet.cell(row_index, 8).value)
         excel_tinh = sheet.cell(row_index, 10).value
@@ -137,12 +140,15 @@ def view(request, id=0):
 
         # chuyển đổi số điện thoại
         if excel_phone:
-            clean_phone = excel_phone.strip()
-            clean_phone = clean_phone.replace(".", "")
-            clean_phone = clean_phone.replace(",", "")
-            clean_phone = clean_phone.replace(" ", "")
-            string_phone = "0000" + clean_phone
-            text_phone = string_phone[-10:]
+            if type(excel_phone) == "str":
+                clean_phone = excel_phone.strip()
+                clean_phone = clean_phone.replace(".", "")
+                clean_phone = clean_phone.replace(",", "")
+                clean_phone = clean_phone.replace(" ", "")
+                string_phone = "0000" + clean_phone
+                text_phone = string_phone[-10:]
+            else:
+                text_phone = str(excel_phone)
         else:
             text_phone = "0999999999"
 
