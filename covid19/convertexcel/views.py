@@ -100,9 +100,10 @@ def view(request, id=0):
             python_date = datetime(*xlrd.xldate_as_tuple(int(split_birthdate[0]), 0))
             text_birthdate = python_date.strftime("%d/%m/%Y")
         else:
-            year = int(split_birthdate[0])
-            if year in range(1920,2010):
-                text_birthdate = "01/01/" + str(year)
+            if split_birthdate:
+                year = int(split_birthdate[0])
+                if year in range(1920,2010):
+                    text_birthdate = "01/01/" + str(year)
             else:
                 text_birthdate = "01/01/1990"
 
