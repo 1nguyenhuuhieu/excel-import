@@ -13,6 +13,8 @@ from datetime import datetime, timedelta
 import re
 # Create your views here.
 
+
+
 def index(request):
     files = FileUpload.objects.all().count()
     minutes = int(files) * 15
@@ -55,16 +57,27 @@ def view(request, id=0):
     sheet = book.sheet_by_index(0)
     count_p = len(range(8,sheet.nrows))
 
+    temp_group = 8
+
     for row_index in range(8, sheet.nrows):
         excel_name = sheet.cell(row_index,1).value
         excel_birthdate = str(sheet.cell(row_index,2).value)
         excel_sex = str(sheet.cell(row_index,3).value).lower()
+        excel_group = sheet.cell(row_index,4).value
+        excel_phone = str(sheet.cell(row_index, 6).value)
+        excel_ccnd = str(sheet.cell(row_index, 7).value)
+        excel_MBH = str(sheet.cell(row_index, 8).value)
+        excel_tinh = sheet.cell(row_index, 10).value
+        excel_huyen = sheet.cell(row_index, 12).value
+        excel_xa = sheet.cell(row_index, 14).value
+        
+        excel_donvicongtac = sheet.cell(row_index, 5).value
+        excel_chitiet = sheet.cell(row_index, 15).value
+
+    # chuyển đổi ngày tháng năm sinh
         clean_birthdate = excel_birthdate.strip()
         clean_birthdate = clean_birthdate.replace(".", "/")
         split_birthdate = clean_birthdate.split("/")
-
-
-        # chuyển đổi ngày tháng năm sinh
         if len(split_birthdate) == 3:
             #thêm kí tự cho đủ ngày tháng
             split_birthdate[0] = "0" + split_birthdate[0]
@@ -103,9 +116,74 @@ def view(request, id=0):
 
         # chuyển đổi họ và tên
         clean_name = excel_name.title()
+
+        # chuyển đổi mã nhóm
+        if excel_group:
+            text_group = int(excel_group)
+            temp_group = text_group
+        else:
+            text_group = int(temp_group)
+
+        # chuyển đổi số điện thoại
+        if excel_phone:
+            clean_phone = excel_phone.strip()
+            clean_phone = clean_phone.replace(".", "")
+            clean_phone = clean_phone.replace(",", "")
+            clean_phone = clean_phone.replace(" ", "")
+            string_phone = "0000" + clean_phone
+            text_phone = string_phone[-10:]
+        else:
+            text_phone = "0999999999"
+
+        # chuyển đổi số cccd
+        if excel_ccnd:
+            if len(excel_ccnd) == 8 or len(excel_ccnd) == 9 or len(excel_ccnd) == 12:
+                text_ccnd = excel_ccnd
+            else:
+                text_ccnd = "000000000" + excel_ccnd
+                text_ccnd = text_ccnd[-12:]
+        else:
+            text_ccnd = "188888888"
+
+        # chuyển đổi mã thẻ bảo hiểm
+        if excel_MBH:
+            text_MBH = "00000000000" + excel_MBH
+            text_MBH = text_MBH[-15:]
+        else:
+            text_MBH = ""
+
+        # tỉnh huyện xã
+
+
+        if excel_tinh:
+            text_tinh = int(excel_tinh)
+            temp_tinh = text_tinh
+        else:
+            text_tinh = temp_tinh
+        if excel_huyen:
+            text_huyen = int(excel_huyen)
+            temp_huyen = text_huyen
+        else:
+            text_huyen = temp_huyen
+        if excel_xa:
+            text_xa = int(excel_xa)
+            temp_xa = text_xa
+        else:
+            text_xa = temp_xa
+
+
         s.write(row_index, 2, text_birthdate)
         s.write(row_index, 1, clean_name)
         s.write(row_index, 3, text_sex)
+        s.write(row_index, 4, text_group)
+        s.write(row_index, 6, text_phone)
+        s.write(row_index, 7, text_ccnd)
+        s.write(row_index, 8, text_MBH)
+        s.write(row_index, 10, text_tinh)
+        s.write(row_index, 12, text_huyen)
+        s.write(row_index, 14, text_xa)
+        s.write(row_index, 5, excel_donvicongtac)
+        s.write(row_index, 15, excel_chitiet)
 
     new_file_name = 'media/static/output/' + str(id) + '.xls'
     wb.save(new_file_name)
