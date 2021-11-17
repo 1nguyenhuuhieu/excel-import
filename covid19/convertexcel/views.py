@@ -101,9 +101,12 @@ def view(request, id=0):
             text_birthdate = python_date.strftime("%d/%m/%Y")
         else:
             if split_birthdate:
-                year = int(split_birthdate[0])
-                if year in range(1920,2010):
-                    text_birthdate = "01/01/" + str(year)
+                try:
+                    year = int(split_birthdate[0])
+                    if year in range(1920,2010):
+                        text_birthdate = "01/01/" + str(year)
+                except:
+                    text_birthdate = "01/01/1990"
             else:
                 text_birthdate = "01/01/1990"
 
