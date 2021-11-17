@@ -4,5 +4,11 @@
 
 {{ file.excel_file.file_name }}
 
-<a href="{{ file.output }}">Tải xuống output</a>
+<h5 class="mb-3">Chuyển đổi thành công {{count_p}} hàng dữ liệu</h5>
+
+<a href="{{ file.output }}" class="btn btn-info btn-lg w-100 mb-4"><i class="fas fa-gift me-3"></i>Quà giáng sinh tới rồi, nhận ngay</a>
+
+    <a href="{% url 'index' %}" class="text-decoration-none fs-6 fw-bolder"><i class="fas fa-arrow-left me-2"></i>Về trang chủ</a>
+
+
 {% endblock %}

@@ -207,7 +207,9 @@ audio {
 
               <div class="wrapper">
                 <div class="typing-demo">
-                  Chuyển đổi file import lên cổng tiêm chủng covid-19
+
+					<a href="{% url 'index' %}" class="text-decoration-none text-black"> Chuyển đổi file import lên cổng tiêm chủng covid-19</a>
+                 
 
                 </div>
             </div>
@@ -218,8 +220,8 @@ audio {
               {% block content %}
 {% endblock %}
 
-
-<p class="mt-3"><i class="fas fa-lightbulb me-1"></i> Đến hiện tại đã có xx file được chuyển đổi, tính trung bình 15 phút tiết kiệm cho 1 file, mình đã tiết kiệm cho các bạn .. </p>
+{% load humanize %}
+<p class="mt-3"><i class="fas fa-lightbulb me-1"></i> Đến hiện tại đã có {{files}} file được chuyển đổi, tính trung bình 15 phút tiết kiệm cho 1 lần import. Chúng ta đã tiết kiệm được: {{ d }} phút, bằng khoảng {{ hour}} giờ làm việc nhàm chán.</p>
 
 <hr>
 <p class=" mt-5  fw-bolder fs-5 text-center">from <a href="mailto:1nguyenhuuhieu@gmail.com" class="text-decoration-none">hiếu</a> with <i class="fas fa-heart text-danger"></i></p>
