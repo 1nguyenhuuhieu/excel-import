@@ -160,14 +160,11 @@ def view(request, id=0):
             text_phone = "0999999999"
 
         # chuyển đổi số cccd
-        if excel_ccnd:
-            if len(str(excel_ccnd)) == 8 or len(str(excel_ccnd)) == 9 or len(str(excel_ccnd)) == 12:
-                text_ccnd = int(excel_ccnd)
-            else:
-                text_ccnd = "000000000" + str(excel_ccnd)
-                text_ccnd = text_ccnd[-12:]
+        if excel_ccnd and len(str(excel_ccnd)) == 12 :
+            text_ccnd = int(excel_ccnd)
         else:
-            text_ccnd = "188888888"
+            text_ccnd = "040" + str(text_sex) + text_birthdate[-2:]  + "123456"
+            text_ccnd = text_ccnd[-12:]
 
         # chuyển đổi mã thẻ bảo hiểm
         if excel_MBH:
