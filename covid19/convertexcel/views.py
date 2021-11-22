@@ -62,7 +62,7 @@ def view(request, id=0):
     temp_huyen = 0
     temp_xa = 0
 
-    for row_index in range(8, sheet.nrows):
+    for row_index in range(9, sheet.nrows):
         excel_name = sheet.cell(row_index,1).value
         excel_birthdate = str(sheet.cell(row_index,2).value)
         excel_sex = str(sheet.cell(row_index,3).value).lower()
