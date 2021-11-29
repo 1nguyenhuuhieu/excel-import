@@ -236,9 +236,12 @@ def view(request, id=0):
             try:
                 text_xa = MAXA[text_xa]
             except:
-                text_xa = MAXA["thi"]
+                if len(text_xa) == 5:
+                    text_xa = str(text_xa)
+                else:
+                    text_xa = MAXA["thi"]
         else:
-            text_xa = temp_xa
+            text_xa = "17329"
 
 
         s.write(row_index, 2, text_birthdate)
