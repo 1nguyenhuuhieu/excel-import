@@ -7,12 +7,37 @@ from xlrd import open_workbook,cellname
 from xlutils.copy import copy
 from xlwt import Workbook
 import xlrd
+from django.template.defaultfilters import slugify
+
 
 from .forms import *
 from datetime import datetime, timedelta
 import re
 # Create your views here.
 
+MAXA = {
+    "thi": 17329,
+    "tho": 17332,
+    "thanh": 17335,
+    "binh":	17338,
+    "tam": 17341,
+    "dinh":	17344,
+    "hung":	17347,
+    "cam": 17350,
+    "duc": 17353,
+    "tuong": 17356,
+    "hoa": 17357,
+    "tao": 17359,
+    "vinh":	17362,
+    "lang":	17365,
+    "hoi":  17368,
+    "thach": 17371,
+    "phuc": 17374,
+    "long": 17377,
+    "khai": 17380,
+    "linh": 17383,
+    "cao": 17386
+}
 
 
 def index(request):
@@ -41,6 +66,7 @@ def index(request):
 
 
 def view(request, id=0):
+
     file = FileUpload.objects.get(pk=id)
     files = FileUpload.objects.all().count()
 
@@ -160,8 +186,17 @@ def view(request, id=0):
             text_phone = "0999999999"
 
         # chuyển đổi số cccd
-        if excel_ccnd and len(str(excel_ccnd)) == 12 :
-            text_ccnd = int(excel_ccnd)
+        if excel_ccnd:
+            if len(str(excel_ccnd)) == 12 :
+                text_ccnd = int(excel_ccnd)
+            elif len(str(excel_ccnd)) == 9:
+                text_ccnd = int(excel_ccnd)
+            elif len(str(excel_ccnd)) == 11:
+                text_ccnd = int(excel_ccnd)
+                text_ccnd = "0" + str(text_ccnd)
+            else:
+                text_ccnd = "040" + str(text_sex) + text_birthdate[-2:]  + "123456"
+                text_ccnd = text_ccnd[-12:]
         else:
             text_ccnd = "040" + str(text_sex) + text_birthdate[-2:]  + "123456"
             text_ccnd = text_ccnd[-12:]
@@ -189,8 +224,19 @@ def view(request, id=0):
             text_huyen = temp_huyen
             
         if excel_xa:
-            text_xa = int(excel_xa)
-            temp_xa = text_xa
+            text_xa = str(excel_xa)
+            text_xa = text_xa.replace("Đ", "d")
+            text_xa = slugify(text_xa)
+            text_xa = text_xa.replace("-", "")
+            text_xa = text_xa.replace("xa", "")
+            text_xa = text_xa.replace("thitrananhson", "thi")
+            text_xa = text_xa.replace("thitran", "thi")
+            text_xa = text_xa.replace("son", "")
+            text_xa = text_xa.replace("tran", "")
+            try:
+                text_xa = MAXA[text_xa]
+            except:
+                text_xa = MAXA["thi"]
         else:
             text_xa = temp_xa
 
