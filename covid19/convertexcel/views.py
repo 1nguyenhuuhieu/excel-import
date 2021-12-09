@@ -8,6 +8,7 @@ from xlutils.copy import copy
 from xlwt import Workbook
 import xlrd
 from django.template.defaultfilters import slugify
+import random
 
 
 from .forms import *
@@ -198,7 +199,7 @@ def view(request, id=0):
                 text_ccnd = "040" + str(text_sex) + text_birthdate[-2:]  + "123456"
                 text_ccnd = text_ccnd[-12:]
         else:
-            text_ccnd = "040" + str(text_sex) + text_birthdate[-2:]  + "123456"
+            text_ccnd = "040" + str(text_sex) + text_birthdate[-2:]  + str(random.randint(100000, 999999))
             text_ccnd = text_ccnd[-12:]
 
         # chuyển đổi mã thẻ bảo hiểm
